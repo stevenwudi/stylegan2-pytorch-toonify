@@ -1,9 +1,19 @@
-# StyleGAN 2 in PyTorch with Toonification
+# StyleGAN 2 in PyTorch
+
+Implementation of Analyzing and Improving the Image Quality of StyleGAN (https://arxiv.org/abs/1912.04958) in PyTorch
+
+## Notice
+
+I have tried to match official implementation as close as possible, but maybe there are some details I missed. So please use this implementation with care.
+
+## Requirements
+
+I have tested on:
+
+* PyTorch 1.3.1
+* CUDA 10.1/10.2
 
 ## Usage
-
-convert weight from ffhd checkpoint:
-
 
 First create lmdb datasets:
 
