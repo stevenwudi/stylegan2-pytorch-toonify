@@ -1,4 +1,5 @@
 import argparse
+import os
 
 import torch
 from torchvision import utils
@@ -20,9 +21,13 @@ def generate(args, g_ema, device, mean_latent):
             # # sample[:, 0, :, :] = r
             # # sample[:, 2, :, :] = b
             #sample = sample[:, [2, 1, 0], :, :]
+            save_dir = "sample_%s_%s" % (args.size, args.ckpt[-8:-3])
+            #print("Save to: %s" % save_dir)
+            if not os.path.exists(save_dir):
+                os.mkdir(save_dir)
             utils.save_image(
                 sample,
-                f"sample/{str(i).zfill(6)}.png",
+                save_dir + f"/{str(i).zfill(6)}.png",
                 nrow=1,
                 normalize=True,
                 range=(-1, 1),
@@ -34,17 +39,17 @@ if __name__ == "__main__":
     device = "cuda"
 
     parser = argparse.ArgumentParser(description="Generate samples from the generator")
-
     parser.add_argument("--size", type=int, default=1024, help="output image size of the generator")
     parser.add_argument("--sample", type=int, default=1, help="number of samples to be generated for each image",)
     parser.add_argument("--pics", type=int, default=20, help="number of images to be generated")
     parser.add_argument("--truncation", type=float, default=1, help="truncation ratio")
     parser.add_argument("--truncation_mean", type=int, default=4096, help="number of vectors to calculate mean for the truncation")
-    #parser.add_argument("--ckpt", type=str, default="./checkpoint/550650.pt", help="path to the model checkpoint")
-    parser.add_argument("--ckpt", type=str, default="../stylegan2-ffhq-config-f.pt", help="path to the model checkpoint",)
+    parser.add_argument("--ckpt", type=str, default="./checkpoint/000590.pt", help="path to the model checkpoint")
+    #parser.add_argument("--ckpt", type=str, default="../stylegan2-ffhq-config-f.pt", help="path to the model checkpoint",)
     parser.add_argument("--channel_multiplier", type=int, default=2, help="channel multiplier of the generator. config-f = 2, else = 1",)
     args = parser.parse_args()
 
+    print("Loading checkpoint: %s" % args.ckpt)
 
     args.latent = 512
     args.n_mlp = 8
@@ -60,5 +65,4 @@ if __name__ == "__main__":
     else:
         mean_latent = None
 
-    print("Loading checkpoint: %s" % args.ckpt)
     generate(args, g_ema, device, mean_latent)

@@ -134,3 +134,4 @@ wandb/
 *.pt
 
 .DS_Store
+*.png

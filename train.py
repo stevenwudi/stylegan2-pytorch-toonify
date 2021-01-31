@@ -325,7 +325,7 @@ if __name__ == "__main__":
     device = "cuda"
     parser = argparse.ArgumentParser(description="StyleGAN2 trainer")
     parser.add_argument("--path", default='./dataset', type=str, help="path to the lmdb dataset")
-    parser.add_argument("--iter", type=int, default=551000, help="total training iterations")
+    parser.add_argument("--iter", type=int, default=3000, help="total training iterations")
     parser.add_argument("--batch", type=int, default=8, help="batch sizes for each gpus")
     parser.add_argument("--n_sample", type=int, default=8, help="number of the samples generated during training",)
     parser.add_argument("--size", type=int, default=1024, help="image sizes for the model")
@@ -336,7 +336,8 @@ if __name__ == "__main__":
     parser.add_argument("--d_reg_every", type=int, default=16, help="interval of the applying r1 regularization")
     parser.add_argument("--g_reg_every", type=int, default=4, help="interval of the applying path length regularization",)
     parser.add_argument("--mixing", type=float, default=0.9, help="probability of latent code mixing")
-    parser.add_argument("--ckpt", type=str, default="./stylegan2-ffhq-config-f.pt", help="path to the model checkpoint",)
+    #parser.add_argument("--ckpt", type=str, default="./stylegan2-ffhq-config-f.pt", help="path to the model checkpoint",)
+    parser.add_argument("--ckpt", type=str, default="./checkpoint/000590.pt", help="path to the model checkpoint")
     parser.add_argument("--lr", type=float, default=0.002, help="learning rate")
     parser.add_argument("--channel_multiplier", type=int, default=2, help="channel multiplier factor for the model. config-f = 2, else = 1",)
     parser.add_argument("--wandb", action="store_true", help="use weights and biases logging")
